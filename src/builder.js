@@ -2,8 +2,8 @@
 
 const co = require('co');
 
-const log = require('../log')(module.id);
-const api = require('../api');
+const log = require('./log')(module.id);
+const api = require('./api');
 const dao = require('./dao');
 
 const buildCountries = co.wrap(function *() {
@@ -18,5 +18,3 @@ buildCountries().then(countriesList => {
         log.info('buildCountries::length', addedCountries.length);
     })
 });
-
-

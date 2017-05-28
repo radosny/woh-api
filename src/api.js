@@ -9,19 +9,31 @@ const countriesUrls = [
     'http://daybase.eu/zeit/api/getRegions/107/2/false',
     'http://daybase.eu/zeit/api/getRegions/106/2/false'
 ];
+const getUrlForHolidays = (countryId, year) => `http://daybase.eu/zeit/api/getEvents/${year}/2/${countryId}/1/true/true/true`;
+
+exports.getHolidays = function *(countryId, year) {
+    log.info('getHolidays::', ...arguments);
+    const holidaysListResp = yield request(getUrlForHolidays(countryId, year));
+    try {
+        return JSON.parse(holidaysListResp.body);
+    } catch (e) {
+        log.error('getHolidays::parsing-fail', holidaysListResp.body);
+        return e;
+    }
+}
 
 function *getCountry(url) {
     log.info('getCountry::', url);
-    const countriesList = yield request(url);
-    if (countriesList.statusCode >= 500) {
+    const countriesListResp = yield request(url);
+    if (countriesListResp.statusCode >= 500) {
         log.error('getCountry::fail', url);
         yield new Promise(resolve => setTimeout(resolve, 5000));
         return yield getCountry(url);
     }
     try {
-        return JSON.parse(countriesList.body);
+        return JSON.parse(countriesListResp.body);
     } catch (e) {
-        log.error('getCountry::parsing-fail', countriesList.body);
+        log.error('getCountry::parsing-fail', countriesListResp.body);
     }
 }
 

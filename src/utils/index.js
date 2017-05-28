@@ -1,7 +1,9 @@
 'use strict';
 
-const handleBaseException = require('./exceptionHandler').handleBaseException;
+const {handleBaseException} = require('./exceptionHandler');
+const {parseHolidaysResponse} = require('./holidaysParser');
 
 module.exports = {
-    handleBaseException
+    handleBaseException,
+    parseHolidaysResponse
 };

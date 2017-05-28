@@ -1,6 +1,7 @@
 'use strict';
 
 const restify = require('restify');
+const helmet = require('helmet');
 const seppuku = require('seppuku');
 const log = require('./log')(module.id);
 const baseRouter = require('./router');
@@ -32,8 +33,11 @@ exports.create = function create() {
     server.pre(restify.pre.sanitizePath());
     server.use(restify.fullResponse());
     server.use(restify.gzipResponse());
-    server.use(restify.bodyParser({mapParams: false}));
-    server.use(restify.queryParser({mapParams: false}));
+    server.use(restify.bodyParser());
+    server.use(restify.queryParser());
+    server.use(helmet.noCache());
+    server.use(helmet.xssFilter());
+    server.use(helmet.hidePoweredBy());
 
     baseRouter.applyRoutes(server, '/v1/calendar');
 
