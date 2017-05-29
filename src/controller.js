@@ -7,10 +7,11 @@ exports.discovery = function *discovery(req, res) {
     return {};
 };
 
-exports.getCountries = function *getCountries(req) {
+exports.getCountries = function *getCountries() {
     return yield dao.getCountries();
 };
 
 exports.getHolidays = function *getHolidays(req) {
-    return yield dao.getHolidays(81, 2017);
+    const {params:{year, countryId}} = req;
+    return yield dao.getHolidays(parseInt(countryId, 10), parseInt(year, 10));
 };

@@ -31,6 +31,6 @@ const wrapHandler = function (controllerGenerator) {
 
 router.get('/', wrapHandler(controller.discovery));
 router.get('/countries', wrapHandler(controller.getCountries));
-router.get('/holidays', wrapHandler(controller.getHolidays));
+router.get('/holidays/:year/:countryId', wrapHandler(controller.getHolidays));
 
 module.exports = router;

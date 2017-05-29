@@ -1,8 +1,8 @@
+'use strict';
+
 const request = require('co-request');
-const co = require('co');
 const parallel = require('co-parallel');
 
-const config = require('./config').get();
 const log = require('./log')(module.id);
 
 const countriesUrls = [
@@ -37,13 +37,13 @@ function *getCountry(url) {
     }
 }
 
-exports.getCountries = function* () {
+exports.getCountries = function *() {
     const reqs = countriesUrls.map(getCountry);
     const res = yield parallel(reqs);
     return res.reduce((acc, val) => (
         acc.concat(val.List)
     ), []).reduce((acc, {id, text}) => {
-        acc.push({id,text});
+        acc.push({id, text});
         return acc;
     }, []);
 };
