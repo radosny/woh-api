@@ -1,0 +1,16 @@
+{
+  "apps": [{
+      "name": "woh-api",
+      "script": "src/start.js",
+      "cwd": "projectpath/WOH/woh-api",
+      "out_file": "projectpath/WOH/woh-api/tmp/woh-api.log",
+      "error_file": "projectpath/WOH/woh-api/tmp/woh-api.log",
+      "merge_logs": true,
+      "watch": true,
+      "ignore_watch": ["node_modules", "public", ".git"],
+      "env": {
+          "NODE_ENV": "development",
+          "args": ["--ignore-watch=\.git|node_modules"]
+      }
+  }]
+}
