@@ -1,9 +1,10 @@
 'use strict';
 
 const {handleBaseException} = require('./exceptionHandler');
-const {parseHolidaysResponse} = require('./holidaysParser');
+const {parseHolidays, parseCountries} = require('./holidaysParser');
 
 module.exports = {
     handleBaseException,
-    parseHolidaysResponse
+    parseCountries,
+    parseHolidays
 };

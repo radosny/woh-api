@@ -13,5 +13,5 @@ exports.getCountries = function *getCountries() {
 
 exports.getHolidays = function *getHolidays(req) {
     const {params:{year, countryId}} = req;
-    return yield dao.getHolidays(parseInt(countryId, 10), parseInt(year, 10));
+    return yield dao.getHolidays(countryId, year);
 };

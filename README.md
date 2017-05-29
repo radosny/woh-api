@@ -23,6 +23,11 @@ nvm use
 npm install
 ```
 
+### Project run
+---
+```
+npm start
+```
 
 ---
 ### Since external API isn't reachable at the moment I writing this doc. I suggest switch into different branch `git checkout local-holidays`

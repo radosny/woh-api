@@ -8,8 +8,6 @@ const {handleBaseException} = require('./utils');
 const app = server.create();
 handleBaseException(app);
 
-// require('./builder');
-
 app.listen({
     port: config.SERVER_PORT
 }, function () {
