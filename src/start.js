@@ -3,12 +3,15 @@
 const log = require('./log')('module.id');
 const config = require('./config').get();
 const server = require('./server');
+const {fetchInitialData} = require('./builder');
 const {handleBaseException} = require('./utils');
+const {addRoutesForDiscovery} = require('./controller');
 
 const app = server.create();
 handleBaseException(app);
 
-require('./builder');
+fetchInitialData();
+addRoutesForDiscovery(app.router.routes);
 
 app.listen({
     port: config.SERVER_PORT
