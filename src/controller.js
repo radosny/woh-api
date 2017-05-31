@@ -1,7 +1,7 @@
 'use strict';
 
 const {reduce} = require('lodash');
-const dao = require('./dao');
+const {dao} = require('./dao');
 let routes = [];
 
 exports.addRoutesForDiscovery = router => {
@@ -18,19 +18,15 @@ exports.addRoutesForDiscovery = router => {
     }, []);
 };
 
-exports.discovery = function *discovery(req, res) {
+exports.discovery = function *discovery() {
     return routes;
 };
 
 exports.getCountries = function *getCountries() {
-    return yield dao.getCountries();
+    return yield dao.instance.getCountries();
 };
 
 exports.getHolidays = function *getHolidays(req) {
     const {params: {year, countryId}} = req;
-    return yield dao.getHolidays(parseInt(countryId, 10), parseInt(year, 10));
-    /**
-     const {params:{year, countryId}} = req;
-     return yield dao.getHolidays(countryId, year);
-     /*
+    return yield dao.instance.getHolidays(countryId, year);
 };
