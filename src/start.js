@@ -18,3 +18,5 @@ app.listen({
 }, function () {
     log.info(`${app.name} listening at ${app.url}`);
 });
+
+exports.app = app;
