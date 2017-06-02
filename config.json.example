@@ -1,6 +1,6 @@
 {
     "SERVER_PORT": 8099,
     "SHOW_STACK": true,
-    "LOG_LEVEL": "debug",
+    "LOG_LEVEL": "info",
     "DB_URL": "localhost/woh_db"
 }

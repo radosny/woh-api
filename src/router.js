@@ -13,7 +13,6 @@ const wrapHandler = function (controllerGenerator) {
     return function (req, res) {
         wrappedController(req, res)
             .then(result => {
-                log.debug('res:', result);
                 res.json(result);
             })
             .catch(e => {

@@ -1,6 +1,7 @@
 'use strict';
 
 const request = require('co-request');
+const restify = require('restify');
 const parallel = require('co-parallel');
 
 const log = require('./log')(module.id);
@@ -14,6 +15,9 @@ const getUrlForHolidays = (countryId, year) => `http://daybase.eu/zeit/api/getEv
 exports.getHolidays = function *(countryId, year) {
     log.info('getHolidays::', ...arguments);
     const holidaysListResp = yield request(getUrlForHolidays(countryId, year));
+    if (!holidaysListResp.body) {
+        throw new restify.NotFoundError({message: 'Holidays not found for specified request'});
+    }
     try {
         return JSON.parse(holidaysListResp.body);
     } catch (e) {
@@ -22,19 +26,27 @@ exports.getHolidays = function *(countryId, year) {
     }
 }
 
-function *getCountry(url) {
+function *getCountry(url, retryCount = 0) {
     log.info('getCountry::', url);
     const countriesListResp = yield request(url);
     if (countriesListResp.statusCode >= 500) {
         log.error('getCountry::fail', url);
         yield new Promise(resolve => setTimeout(resolve, 5000));
-        return yield getCountry(url);
-    }
-    try {
-        return JSON.parse(countriesListResp.body);
-    } catch (e) {
-        log.error('getCountry::parsing-fail', countriesListResp.body);
-        throw e;
+        if (retryCount < 5) {
+            return yield getCountry(url, retryCount + 1);
+        } else {
+            log.error('getCountry::fail-retry');
+            throw new restify.InternalServerError({message: 'Countries not available'});
+        }
+    } else if (countriesListResp.statusCode >= 400 && countriesListResp.statusCode < 500 || !countriesListResp.body) {
+        throw new restify.NotFoundError({message: 'Countries not found'});
+    } else {
+        try {
+            return JSON.parse(countriesListResp.body);
+        } catch (e) {
+            log.error('getCountry::parsing-fail', countriesListResp.body);
+            throw e;
+        }
     }
 }
 

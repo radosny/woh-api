@@ -25,8 +25,8 @@ exports.create = function create() {
         }
     });
 
-    server.pre((req, res, next) => {
-        log.debug({req}, 'request');
+    server.pre(({body, url}, res, next) => {
+        log.debug('request:', url, body);
         next();
     });
 

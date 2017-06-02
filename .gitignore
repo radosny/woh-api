@@ -2,8 +2,8 @@
 .history
 .vscode
 
+# project
 /node_modules
 /tmp
-
-# local conf
+config.json
 pm2.json
