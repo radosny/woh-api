@@ -22,6 +22,7 @@ nvm use
 ```
 npm install
 ```
+- Create pm2.json & config.json based on example files.
 
 ### Project run
 ---
