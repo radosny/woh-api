@@ -4,7 +4,7 @@
   "description": "REST api for providing information about holidays",
   "main": "start.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha tests/end/test.js",
     "benchmark": "nvm use; node tests/perf/benchmark.js",
     "start": "node src/start.js | bunyan"
   },
