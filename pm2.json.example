@@ -5,6 +5,7 @@
       "cwd": "projectpath/WOH/woh-api",
       "out_file": "projectpath/WOH/woh-api/tmp/woh-api.log",
       "error_file": "projectpath/WOH/woh-api/tmp/woh-api.log",
+      "interpreter" : "node@6.10.3",
       "merge_logs": true,
       "watch": true,
       "ignore_watch": ["node_modules", "public", ".git"],

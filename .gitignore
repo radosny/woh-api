@@ -1,5 +1,9 @@
+# vscode
 .history
 .vscode
 
 /node_modules
 /tmp
+
+# local conf
+pm2.json
