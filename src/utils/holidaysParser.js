@@ -3,25 +3,33 @@
 const map = require('lodash.map');
 
 exports.parseHolidays = holidays => (
-    Promise.resolve(holidays.reduce((acc, {date}) => {
-        acc.push(date);
-        return acc;
-    }, [])
-));
+    new Promise(resolve => setImmediate(() => {
+        const parsedHolidays = holidays.reduce((acc, {date}) => {
+            acc.push(date);
+            return acc;
+        }, []);
+        resolve(parsedHolidays);
+    }))
+);
 
 exports.parseHolidaysResponse = holidays => (
-    Promise.resolve(holidays.List.reduce((acc, {occurrences}) => {
-        const {0: {day, month, year}} = occurrences;
-        return acc.add(new Date(`${year}-${month}-${day} 00:00:00 GMT-0`).toUTCString());
-    }, new Set())
-));
+    new Promise(resolve => setImmediate(() => {
+        const parsedHolidays = holidays.List.reduce((acc, {occurrences}) => {
+            const {0: {day, month, year}} = occurrences;
+            return acc.add(new Date(`${year}-${month}-${day} 00:00:00 GMT-0`).toUTCString());
+        }, new Set());
+        resolve(parsedHolidays);
+    }))
+);
 
 exports.parseCountries = countries => (
-    Promise.resolve(
-        map(countries, (country, key) => (
+    new Promise(resolve => setImmediate(() => {
+        const parsedCountries = map(countries, (country, key) => (
             {
                 id: key,
                 text: country
             }
-        )))
+        ));
+        resolve(parsedCountries);
+    }))
 );
